@@ -12,32 +12,27 @@ import java.util.HashMap;
  * @author Benjamin
  */
 public class Affecter {
-    private HashMap <Vol, Pilote> pilote; 
-    private HashMap <Vol, Pilote> copilote ;
-    private HashMap <Vol, Hotesse> hotesse ;
-    private HashMap <Vol, Hotesse> hotesse2 ;
-    private HashMap <Vol, Hotesse> hotesse3 ;
+   
+    private HashMap <Vol, ArrayList> affectationVol = new HashMap <> ();; 
+   
     
-// Je veux récup une ArrayList qui récupère toutes les HashMap, je sais pas si 
-    //ça sert à quelque chose
-        //ni si ça marche
-    //DELIRE PERSONNEL INC
-    public ArrayList getAffecter ()
-    {
-        ArrayList affecter = new ArrayList();
-        
-        affecter.add(this.pilote);
-        affecter.add(this.copilote);
-        affecter.add(this.hotesse);
-        affecter.add(this.hotesse2);
-        affecter.add(this.hotesse3);
-        
-        return affecter;
-    }
 
-    // Constructeur qui prend un vol et tout le personnel, on ajoute ensuite à chaque HashMap le vol et le personnel correspondant
+
+    // Constructeur qui prend un vol et tout le personnel
+    //On ajoute le personnel à 'Arraylist
+    //et on ajoute à la HashMap : (le vol, la liste) pour associer tout le personnel au vol.
     public Affecter(Vol vol, Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3) {
-       this.pilote = new HashMap <> ();
+     ArrayList affecter = new ArrayList();
+        
+     affecter.add(pilote);
+     affecter.add(copilote);
+     affecter.add(hotesse1);
+     affecter.add(hotesse2);
+     affecter.add(hotesse3);
+     
+    this.affectationVol.put(vol, affecter);
+        
+        /* this.pilote = new HashMap <> ();
        this.copilote = new HashMap <> ();
        this.hotesse = new HashMap <> ();
        this.hotesse2 = new HashMap <> ();
@@ -47,7 +42,7 @@ public class Affecter {
        this.copilote.put(vol, copilote);
        this.hotesse.put(vol, hotesse1);
        this.hotesse2.put(vol, hotesse2);
-       this.hotesse3.put(vol, hotesse3);
+       this.hotesse3.put(vol, hotesse3);*/
        
     }
     

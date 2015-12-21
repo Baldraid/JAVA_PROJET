@@ -57,8 +57,24 @@ public class JAVA_PROJET {
         
         //Hotesse
         
+         String prenom3 = "Jeanne";
+        String prenom4 = "Serge";
+        String prenom5 = "Sangoku";        
+        String nom3 = "L'hotesse n°1";
+        String nom4 = "L'hotesse n°2";
+        String nom5 = "L'hotesse n°3";
+        String adresse3 = "blabla";
+        String adresse4 = "blabla";
+        String adresse5 = "blabla";
         
+        Hotesse hotesse1 = new Hotesse (prenom3, nom3, adresse3);
+        Hotesse hotesse2 = new Hotesse (prenom4, nom4, adresse4);
+        Hotesse hotesse3 = new Hotesse (prenom5, nom5, adresse5);
+
+        //Affectation au vol
         
+        Affecter affectationVol1 = new Affecter (v, pilote1, pilote2, hotesse1, hotesse2, hotesse3);
+
         System.out.println(v.getDuree());
         
         
