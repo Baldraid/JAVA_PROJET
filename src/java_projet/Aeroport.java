@@ -6,6 +6,8 @@
 package java_projet;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 /**
  *
@@ -13,6 +15,7 @@ import java.util.ArrayList;
  */
 public class Aeroport {
     private int codeA;
+    private static final AtomicInteger count = new AtomicInteger(0); //compteur pour auto-increment
     private String villeA;
     private String paysA;
     private ArrayList lstAero;
@@ -51,8 +54,8 @@ public class Aeroport {
 
     
     
-    public Aeroport(int codeA, String villeA, String paysA) {
-        this.codeA = codeA;
+    public Aeroport(String villeA, String paysA) {
+        this.codeA = count.incrementAndGet();
         this.villeA = villeA;
         this.paysA = paysA;
     }

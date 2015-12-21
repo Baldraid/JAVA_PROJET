@@ -8,6 +8,7 @@ package java_projet;
 
 import java.time.LocalTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -16,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Vol {
     private int numVol;
-    private static final AtomicInteger count = new AtomicInteger(0); 
+    private static final AtomicInteger count = new AtomicInteger(0); //compteur auto-increment
     private String jourSemaine;
     private Aeroport depart;
     private Aeroport arrive;
@@ -84,12 +85,15 @@ public class Vol {
         this.etat = etat;
     }
 
+
+    
     public Vol(String jourSemaine, Aeroport depart, Aeroport arrive, LocalTime heureDepart, LocalTime heureArrive, float tarif) {
         this.numVol = count.incrementAndGet();
         this.jourSemaine = jourSemaine;
         this.heureDepart = heureDepart;
         this.heureArrive = heureArrive;
         this.etat = "en création";
+        // Calcule la durée en minute du vol en soustrayant l'heure d'arrivé à l'heure de départ
         this.duree = MINUTES.between(this.heureArrive, this.heureDepart);
         this.tarif = tarif;
         

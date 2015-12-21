@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package java_projet;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 /**
  *
@@ -11,6 +13,8 @@ package java_projet;
  */
 public class Avion {
     private int numAvion;
+    private static final AtomicInteger count = new AtomicInteger(0); //compteur pour auto-increment
+
 
     public int getNumAvion() {
         return numAvion;
@@ -21,7 +25,7 @@ public class Avion {
     }
 
     public Avion(int numAvion) {
-        this.numAvion = numAvion;
+        this.numAvion = count.incrementAndGet();
     }
     
     
