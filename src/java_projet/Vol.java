@@ -8,6 +8,8 @@ package java_projet;
 
 import java.time.LocalTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
+import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -18,6 +20,7 @@ public class Vol {
     private int numVol;
     private static final AtomicInteger count = new AtomicInteger(0); //compteur auto-increment
     private String jourSemaine;
+    private Avion avionaffecte;
     private Aeroport depart;
     private Aeroport arrive;
     private LocalTime heureDepart;
@@ -25,7 +28,7 @@ public class Vol {
     private long duree;
     private float tarif;
     private String etat;
-    private Affecter personnelaffecte;
+    private ArrayList personnelaffecte;
 
     public int getNumVol() {
         return numVol;
@@ -85,9 +88,10 @@ public class Vol {
         this.etat = etat;
     }
 
-    public Affecter getPersonnelaffecte() {
+    public ArrayList getPersonnelaffecte() {
         return personnelaffecte;
     }
+
 
 
     
@@ -103,9 +107,18 @@ public class Vol {
         
     }
     
-    public void affecterpersonnel (Affecter a)
+    public void affecterpersonnel (ArrayList a)
     {
         this.personnelaffecte = a;
+        
+    
+        
+        
+    }
+    
+    public void affecterAvion (Avion a)
+    {
+        this.avionaffecte = a;
     }
        
 }

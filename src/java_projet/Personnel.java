@@ -43,6 +43,11 @@ public class Personnel {
         this.prenomP = prenomP;
         this.adresseP = adresseP;
     }
+
+    @Override
+    public String toString() {
+        return prenomP+ " " +nomP;
+    }
  
     
     

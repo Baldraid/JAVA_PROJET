@@ -14,5 +14,10 @@ public class Hotesse extends Personnel{
     public Hotesse(String nomP, String prenomP, String adresseP) {
         super(nomP, prenomP, adresseP);
     }
+
+    @Override
+    public String toString() {
+        return "L'hotesse " +super.toString()+ " a bien été affectée";
+    }
     
 }

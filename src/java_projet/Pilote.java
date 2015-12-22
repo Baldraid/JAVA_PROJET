@@ -14,5 +14,11 @@ public class Pilote extends Personnel{
     public Pilote(String nomP, String prenomP, String adresseP) {
         super(nomP, prenomP, adresseP);
     }
+
+    @Override
+    public String toString() {
+        return "Le pilote " +super.toString()+ " a bien été affecté";
+    }
+    
     
 }
