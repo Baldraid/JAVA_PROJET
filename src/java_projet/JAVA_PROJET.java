@@ -5,7 +5,11 @@
  */
 package java_projet;
 
+
 import java.time.LocalTime;
+//import java.util.ArrayList;
+//import java.util.Map.Entry;
+
 
 /**
  *
@@ -71,16 +75,15 @@ public class JAVA_PROJET {
         Hotesse hotesse2 = new Hotesse (prenom4, nom4, adresse4);
         Hotesse hotesse3 = new Hotesse (prenom5, nom5, adresse5);
 
-        //Affectation au vol
+        //Création d'affecter
         
         Affecter affectationVol1 = new Affecter (v, pilote1, pilote2, hotesse1, hotesse2, hotesse3);
-
-        System.out.println(v.getDuree());
         
+        //affecterpersonnel au VOl
+        v.affecterpersonnel(affectationVol1);
         
-        
-        
-        
-    }
-    
+        System.out.println();
+       
+       
+}
 }

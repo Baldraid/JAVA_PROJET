@@ -45,6 +45,14 @@ public class Affecter {
        this.hotesse3.put(vol, hotesse3);*/
        
     }
-    
-    
+
+    public HashMap<Vol, ArrayList> getAffectationVol() {
+        return affectationVol;
+    }
+
+    public void setAffectationVol(HashMap<Vol, ArrayList> affectationVol) {
+        this.affectationVol = affectationVol;
+    }
+
+
 }

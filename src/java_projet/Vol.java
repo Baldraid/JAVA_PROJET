@@ -8,7 +8,6 @@ package java_projet;
 
 import java.time.LocalTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -26,6 +25,7 @@ public class Vol {
     private long duree;
     private float tarif;
     private String etat;
+    private Affecter personnelaffecte;
 
     public int getNumVol() {
         return numVol;
@@ -85,6 +85,10 @@ public class Vol {
         this.etat = etat;
     }
 
+    public Affecter getPersonnelaffecte() {
+        return personnelaffecte;
+    }
+
 
     
     public Vol(String jourSemaine, Aeroport depart, Aeroport arrive, LocalTime heureDepart, LocalTime heureArrive, float tarif) {
@@ -99,5 +103,9 @@ public class Vol {
         
     }
     
+    public void affecterpersonnel (Affecter a)
+    {
+        this.personnelaffecte = a;
+    }
        
 }
