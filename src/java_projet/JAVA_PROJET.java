@@ -36,6 +36,12 @@ public class JAVA_PROJET {
         V2 = "Toulouse";
         V3 = "Paris";
         
+        //Avions
+        Avion Av1, Av2, Av3;
+        Av1 = new Avion (1);
+        Av2 = new Avion(2);
+        Av3 = new Avion(3);
+        
         //Aéroports
         Aeroport A1, A2;
         A1 = new Aeroport( V2, P1);
@@ -111,10 +117,19 @@ public class JAVA_PROJET {
         Hotesse hotesse6 = new Hotesse (nom10, prenom10, adresse10);
 
         //Création d'affecter
+            //Personnel
+        v.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
+        v2.affecterpersonnel (pilote3, pilote4, hotesse1, hotesse4, hotesse5);
         
+            //Avion
         Affecter a = new Affecter ();
-        a.affecterPersoVol (v, pilote1, pilote2, hotesse1, hotesse2, hotesse3);
-        a.affecterPersoVol (v2, pilote3, pilote4, hotesse1, hotesse5, hotesse6);
+        a.affecterAvion(v, Av2);
+        a.affecterAvion(v2, Av2);
+        a.affecterAvion(v3, Av2);
+        
+        //Affecter a = new Affecter ();
+        //a.affecterPersoVol (v, pilote1, pilote2, hotesse1, hotesse2, hotesse3);
+        //a.affecterPersoVol (v2, pilote3, pilote4, hotesse1, hotesse5, hotesse6);
         //affecterpersonnel au VOl
         
         

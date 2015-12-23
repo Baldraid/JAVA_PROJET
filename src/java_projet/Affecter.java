@@ -25,6 +25,65 @@ public class Affecter {
          this.affectationVol = new HashMap <> ();      
     }
 
+    //methode pour affecter un avion à un vol
+    public void affecterAvion(Vol vol, Avion a){
+        //ArrayList pour la valeur de l'HashMap
+        ArrayList affecter = new ArrayList();
+        //ArrayList qui récupère les vols en conflits
+        ArrayList <Vol> memeAvion = new ArrayList<> ();
+        //On insère les vols en conflits à cause d'un même avion grâce à la fonction memeAvion plus loin 
+        memeAvion = this.memeAvion(vol, a);
+        //s'il n'y a pas de vols en conflits alors on ajoute directement l'avion à l'ArrayList qui sera valeur de la HashMap
+        //et on ajoute à la HashMap le vol et l'arraylist de l'avion affecté
+        if (memeAvion.isEmpty())
+        {
+            affecter.add(a);
+            this.affectationVol.put(vol, affecter);
+            //on ajoute au vol l'arrayList de l'avion affecté
+            vol.affecteravion(affecter);
+            //Sinon on vérifie les plages horaires du vol qu'on veut affecter aux vols auxquels il peut être en conflits car même membre du personnel
+        }
+        else {
+            //pour chaque vols en conflit
+            for (int i = 0; i< memeAvion.size(); i ++)
+            {   
+            //si pas de conflit de plage horaire alors on ajoute le personnel à l'arraylist et on ajoute le vol et l'arrayList à la Hashmap
+                if (verifPlageHoraire(vol)== true) {
+                    affecter.add(a);
+                    this.affectationVol.put(vol, affecter);
+                    vol.affecteravion(affecter);
+                    System.out.println("Avion bien affecté");
+                }
+                else 
+                {
+                    //Sinon message d'erreur
+                    System.out.println("Vous ne pouvez pas affecter cet avion à ce vol, conflit avec un autre vol");
+                }
+           }
+        }
+    }
+    
+    //fonction qui ajoute les vols éventuellement en conflits (s'ils ont un avion en commun)
+    private ArrayList memeAvion (Vol v, Avion a)
+    {
+        //arraylist qui reçoit les vols en conflits
+        ArrayList <Vol> volMemeAvion = new ArrayList<>();
+        //pour chaque entrée de la HashMap d'affectation
+        for(Map.Entry< Vol, ArrayList> entry : this.affectationVol.entrySet()) 
+        {
+            Vol cle = entry.getKey();
+            ArrayList valeur = entry.getValue();
+                //si l'avion est sur un autre vol on ajoute le vol à l'arraylist
+                for (int i = 0; i<valeur.size(); i++) {
+                    if (valeur.get(i).equals(a))
+                    {
+                       volMemeAvion.add(cle);
+                    }
+                }
+        }
+        //et on retourne l'arraylist
+        return volMemeAvion;   
+    }
     
     //fonction pour affecter le personnel à un vol
     public void affecterPersoVol (Vol vol, Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3)
@@ -45,8 +104,6 @@ public class Affecter {
        affecter.add(hotesse2);
        affecter.add(hotesse3);
        this.affectationVol.put(vol, affecter);
-       //on ajoute au vol l'arrayList du personnel affecté
-       vol.affecterpersonnel(affecter);
 
      }
      //Sinon on vérifie les plages horaires du vol qu'on veut affecter aux vols auxquels il peut être en conflits car même membre du personnel
@@ -61,7 +118,6 @@ public class Affecter {
             affecter.add(hotesse2);
             affecter.add(hotesse3);
             this.affectationVol.put(vol, affecter);
-            vol.affecterpersonnel(affecter);
             System.out.println("Personnel bien affecté");
  }
           else 

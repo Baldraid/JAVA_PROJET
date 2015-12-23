@@ -29,6 +29,8 @@ public class Vol {
     private float tarif;
     private String etat;
     private ArrayList personnelaffecte;
+    private static final Affecter a = new Affecter ();
+
 
     public int getNumVol() {
         return numVol;
@@ -104,21 +106,25 @@ public class Vol {
         // Calcule la durée en minute du vol en soustrayant l'heure d'arrivé à l'heure de départ
         this.duree = MINUTES.between(this.heureArrive, this.heureDepart);
         this.tarif = tarif;
+       
         
     }
     
-    public void affecterpersonnel (ArrayList a)
+    public void affecterpersonnel (Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3)
     {
-        this.personnelaffecte = a;
-        
-    
-        
+       a.affecterPersoVol(this, pilote, copilote, hotesse1, hotesse2, hotesse3);
+       personnelaffecte = new ArrayList ();
+       personnelaffecte.add(pilote);
+       personnelaffecte.add(copilote);
+       personnelaffecte.add(hotesse1);
+       personnelaffecte.add(hotesse2);
+       personnelaffecte.add(hotesse3);  
         
     }
     
-    public void affecterAvion (Avion a)
+   public void affecteravion (ArrayList av)
     {
-        this.avionaffecte = a;
+        this.avionaffecte = av;
     }
        
 }
