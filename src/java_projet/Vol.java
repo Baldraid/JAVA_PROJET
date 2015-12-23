@@ -112,13 +112,13 @@ public class Vol {
     
     public void affecterpersonnel (Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3)
     {
-       a.affecterPersoVol(this, pilote, copilote, hotesse1, hotesse2, hotesse3);
+      if(a.affecterPersoVol(this, pilote, copilote, hotesse1, hotesse2, hotesse3) == false){
        personnelaffecte = new ArrayList ();
        personnelaffecte.add(pilote);
        personnelaffecte.add(copilote);
        personnelaffecte.add(hotesse1);
        personnelaffecte.add(hotesse2);
-       personnelaffecte.add(hotesse3);  
+       personnelaffecte.add(hotesse3);  }
         
     }
     

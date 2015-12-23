@@ -17,7 +17,7 @@ public class Hotesse extends Personnel{
 
     @Override
     public String toString() {
-        return "L'hotesse " +super.toString()+ " a bien été affectée";
+        return "L'hotesse " +super.toString();
     }
     
 }

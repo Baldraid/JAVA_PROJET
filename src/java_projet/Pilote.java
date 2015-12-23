@@ -17,7 +17,7 @@ public class Pilote extends Personnel{
 
     @Override
     public String toString() {
-        return "Le pilote " +super.toString()+ " a bien été affecté";
+        return "Le pilote " +super.toString();
     }
     
     

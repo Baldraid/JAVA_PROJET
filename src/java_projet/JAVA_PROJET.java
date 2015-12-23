@@ -23,6 +23,7 @@ public class JAVA_PROJET {
     public static void main(String[] args) {
         // TODO code application logic here
         String lundi = "Lundi";
+        String mardi = "Mardi";
         
         //Pays
         String P1, P2, P3;
@@ -54,9 +55,13 @@ public class JAVA_PROJET {
         LocalTime depart2 = LocalTime.parse("06:00:00");
         LocalTime arrive2 = LocalTime.parse("07:00:00");
         
+        LocalTime depart3 = LocalTime.parse("06:00:00");
+        LocalTime arrive3 = LocalTime.parse("13:00:00");
+        
         //Vol
         Vol v = new Vol(lundi, A1, A2, depart1, arrive1, (float)50.5 );
         Vol v2 = new Vol(lundi, A1, A2, depart2, arrive2, (float)50.5 );
+        Vol v3 = new Vol(lundi, A1, A2, depart3, arrive3, (float)50.5 );
 
         
         // Pilotes
@@ -120,12 +125,13 @@ public class JAVA_PROJET {
             //Personnel
         v.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
         v2.affecterpersonnel (pilote3, pilote4, hotesse1, hotesse4, hotesse5);
-        
+        v3.affecterpersonnel (pilote1, pilote4, hotesse1, hotesse4, hotesse5);
+
             //Avion
-        Affecter a = new Affecter ();
+       /* Affecter a = new Affecter ();
         a.affecterAvion(v, Av2);
         a.affecterAvion(v2, Av2);
-        a.affecterAvion(v3, Av2);
+        a.affecterAvion(v3, Av2);*/
         
         //Affecter a = new Affecter ();
         //a.affecterPersoVol (v, pilote1, pilote2, hotesse1, hotesse2, hotesse3);
