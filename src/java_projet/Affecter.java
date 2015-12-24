@@ -89,124 +89,105 @@ public class Affecter {
     //retourne un boolean pour déterminer si l'on ajoute les membres du personnel au vol en question
     // attribut ArrayList personnelaffecter de la classe vol
     // si false on l'ajoute sinon non
-    public boolean affecterPersoVol (Vol vol, Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3)
-    {
+     public boolean affecterPersoVol(Vol vol, Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3) {
         //ArrayList pour la valeur de l'HashMap affectation vol de cette classe
-    ArrayList affecter = new ArrayList();
-    
-    //HashMap qui récupère le vol et le personnel en conflit avec le vol auquel on veut affecter 
-    // Se remplie avec la fonction memepersonnel
-    HashMap <Vol, ArrayList> memePersonnel ;
-    memePersonnel = this.memePersonnel(vol, pilote, copilote, hotesse1, hotesse2, hotesse3);
-
-    //HashMap qui récupère les vols en conflits de plage horaire
-    //J'aurais pu juste utiliser une ArrayList mais tant pis je changerais plus tard
-    // se remplie avec la fonction verifPlageHoraire
-    HashMap <Vol, Boolean> volConflictuel ;
-    volConflictuel = this.verifPlageHoraire(vol, memePersonnel);
-    
-    //Booleen pour le retour de la fonction
-    boolean conflit = false;
-   
-    //S'il n'y a pas de personnel en conflit ou pas de conflit de plage horaire alors on ajoute directement
-    if (memePersonnel.isEmpty() || volConflictuel.isEmpty())
-    {
-       //On ajoute tous les membres du personnel à l'ArrayList affecter
-       affecter.add(pilote);
-       affecter.add(copilote);
-       affecter.add(hotesse1);
-       affecter.add(hotesse2);
-       affecter.add(hotesse3);
-       //On ajoute à la HashMap la clé : vol et la valeur : ArrayList du personnel affecté
-       this.affectationVol.put(vol, affecter);
-       // et le boolean prend la valeur faux 
-       conflit = false;
-       System.out.println("Tous les membres du personnel ont été affectés au vol n°" +vol.getNumVol());
-       System.out.println("----------------------------------------------------------------------------------");
-
-     }
-     //Sinon on vérifie les plages horaires du vol qu'on veut affecter
-     //aux vols auxquels il peut être en conflits car même membre du personnel
-     else {
-        // le booleen prend la valeur true donc on ajoutera pas les membre du personnel à la classe vol
-        conflit = true;
-        //Pour chaque entrée de la HashMap même personnel
-        for(Map.Entry< Vol, ArrayList> entry : memePersonnel.entrySet()) 
-     {
-    Vol volPerso = entry.getKey();
-    ArrayList personnelConflict = entry.getValue();
-            // et pour chaque entrée de la HashMap volConflictuel
-            for(Map.Entry< Vol, Boolean> entry2 : volConflictuel.entrySet()) 
-     {
-                Vol volConflict = entry2.getKey();
-                    // On vérifie si le vol est le même dans les deux HashMap
+        ArrayList affecter = new ArrayList();
+        //HashMap qui récupère le vol et le personnel en conflit avec le vol auquel on veut affecter 
+        // Se remplie avec la fonction memepersonnel
+        HashMap<Vol, ArrayList> memePersonnel;
+        memePersonnel = this.memePersonnel(vol, pilote, copilote, hotesse1, hotesse2, hotesse3);
+        //HashMap qui récupère les vols en conflits de plage horaire
+        //J'aurais pu juste utiliser une ArrayList mais tant pis je changerais plus tard
+        // se remplie avec la fonction verifPlageHoraire
+        ArrayList<Vol> volConflictuel;
+        volConflictuel = this.verifPlageHoraire(vol, memePersonnel);
+        //Booleen pour le retour de la fonction
+        boolean conflit = false;
+        //S'il n'y a pas de personnel en conflit ou pas de conflit de plage horaire alors on ajoute directement
+        if (memePersonnel.isEmpty() || volConflictuel.isEmpty()) {
+            //On ajoute tous les membres du personnel à l'ArrayList affecter
+            affecter.add(pilote);
+            affecter.add(copilote);
+            affecter.add(hotesse1);
+            affecter.add(hotesse2);
+            affecter.add(hotesse3);
+            //On ajoute à la HashMap la clé : vol et la valeur : ArrayList du personnel affecté
+            this.affectationVol.put(vol, affecter);
+            // et le boolean prend la valeur faux 
+            conflit = false;
+            System.out.println("Tous les membres du personnel ont été affectés au vol n°" + vol.getNumVol());
+            System.out.println("----------------------------------------------------------------------------------");
+        } //Sinon on vérifie les plages horaires du vol qu'on veut affecter
+        //aux vols auxquels il peut être en conflits car même membre du personnel
+        else {
+            // le booleen prend la valeur true donc on ajoutera pas les membre du personnel à la classe vol
+            conflit = true;
+            //Pour chaque entrée de la HashMap même personnel
+            for (Map.Entry< Vol, ArrayList> entry : memePersonnel.entrySet()) {
+                Vol volPerso = entry.getKey();
+                ArrayList personnelConflict = entry.getValue();
+                // et pour chaque entrée de la HashMap volConflictuel
+                for (int i = 0; i < volConflictuel.size(); i++) {
+                    Vol volConflict = volConflictuel.get(i);
+                        // On vérifie si le vol est le même dans les deux HashMap
                     // Si c'est bon alors on println tous les membres du personnel en conflits
                     //avec le vols où l'on veut affecter
-                   if (volPerso.equals(volConflict))
-                   {
-                       System.out.println("Le vol n°" +volPerso.getNumVol()+ " est en conflit avec le vol n°" +vol.getNumVol());
-                       System.out.println("Le(s) membre(s) du personnel suivant(s) sont déjà affecté(s) :");
-                       for (int i = 0; i< personnelConflict.size(); i++)
-                       {
-                           System.out.println(personnelConflict.get(i).toString());
-                       }
-                       System.out.println("----------------------------------------------------------------------------------");
-
-                   }}}}
-    // et on renvoie la valeur du booleen pour savoir si on ajoute ou non à la classe vol.
-    return conflit;}
-    
-    
+                    if (volPerso.equals(volConflict)) {
+                        System.out.println("Le vol n°" + volPerso.getNumVol() + " est en conflit avec le vol n°" + vol.getNumVol());
+                        System.out.println("Le(s) membre(s) du personnel suivant(s) sont déjà affecté(s) :");
+                        for (int j = 0; j < personnelConflict.size(); j++) {
+                            System.out.println(personnelConflict.get(j).toString());
+                        }
+                        System.out.println("----------------------------------------------------------------------------------");
+                    }
+                }
+            }
+        }
+        // et on renvoie la valeur du booleen pour savoir si on ajoute ou non à la classe vol.
+        return conflit;
+    }
     //On vérifie les conflits de plages horaires
-    //à partir d'un Vol et d'une Hashmap contenant le vol en conflit et les membres du personnel associés
+    //à partir d'un Vol et d'une liste contenant le vol en conflit et les membres du personnel associés
     //Renvoie une HashMap contenant le vol en conflit et un booleen seulement s'il y a conflit
     //Si conflit = true alors il n'y a pas de conflit de plage horaire si = false alors conflit
     // (oui c'est plutot l'inverse mais flemme de changer ^^)
-    private HashMap verifPlageHoraire (Vol v, HashMap <Vol, ArrayList> memepersonnel)
-    {
-        //HashMap pour le retour 
-        HashMap <Vol, Boolean> volconflictuel = new HashMap <> ();
-        // Boolean qui sera renvoyé en valeur de la HashMap
+    private ArrayList verifPlageHoraire(Vol v, HashMap<Vol, ArrayList> memepersonnel) {
+        //liste qui stock les vols conflictuels 
+        ArrayList<Vol> volconflictuel = new ArrayList<>();
+        // Boolean qui determine si un vol est conflictuel ou non
         Boolean conflit = true;
-        
         // pour chaque entrée de la HashMap en entrée de la fonction
-       for(Map.Entry< Vol, ArrayList> entry : memepersonnel.entrySet()) 
-     {
-    Vol cle = entry.getKey();
-    ArrayList valeur = entry.getValue();
-   
-    //si l'heure de départ du vol de la clé est avant l'heure de départ du vol qu'on vérifie
-    if (cle.getHeureDepart().isBefore(v.getHeureDepart()))
-    {
-        // on vérifie si l'arrivé du vol de la clé est avant l'heure de départ du vol qu'on vérifie
-        if (cle.getHeureArrive().isBefore(v.getHeureDepart()))
-        {
-            // si oui on retourne vrai 
-            conflit = true;
+        for (Map.Entry< Vol, ArrayList> entry : memepersonnel.entrySet()) {
+            Vol cle = entry.getKey();
+            ArrayList valeur = entry.getValue();
+            //si l'heure de départ du vol de la clé est avant l'heure de départ du vol qu'on vérifie
+            if (cle.getHeureDepart().isBefore(v.getHeureDepart())) {
+                // on vérifie si l'arrivé du vol de la clé est avant l'heure de départ du vol qu'on vérifie
+                if (cle.getHeureArrive().isBefore(v.getHeureDepart())) {
+                    // si oui on retourne vrai 
+                    conflit = true;
+                } //sinon on retourne faux
+                else {
+                    conflit = false;
+                }
+            }
+            //si l'heure de départ du vol de la clé est après l'heure de départ du vol qu'on vérifie
+            if (cle.getHeureDepart().isAfter(v.getHeureDepart())) {
+                //alors on vérifie si l'heure de départ de la clé est après l'heure d'arrivé du vol qu'on vérifie
+                if (cle.getHeureDepart().isAfter(v.getHeureArrive())) {
+                    //si ok alors true
+                    conflit = true;
+                } //sinon faux 
+                else {
+                    conflit = false;
+                }
+            }
+            // Si conflit est faux 
+            if (!conflit) {
+                //on ajoute le vol à la liste des vols conflictuels
+                volconflictuel.add(cle);
+            }
         }
-        //sinon on retourne faux
-        else conflit = false;
-    }
-    //si l'heure de départ du vol de la clé est après l'heure de départ du vol qu'on vérifie
-    if (cle.getHeureDepart().isAfter(v.getHeureDepart()))
-    {
-        //alors on vérifie si l'heure de départ de la clé est après l'heure d'arrivé du vol qu'on vérifie
-        if (cle.getHeureDepart().isAfter(v.getHeureArrive()))
-        {
-            //si ok alors true
-            conflit = true;
-        }
-        //sinon faux 
-        else conflit = false;
-    }
-    // Si conflit est faux alors on l'ajoute à la HashMap avec la valeur du booleen
-    // Je viens de me rendre compte que j'aurais pu aussi bien renvoyer une Arraylist avec le vol 
-    // si le booleen est faux, mais flemme de changer pour l'instant ^^
-    if (!conflit)
-    {
-    volconflictuel.put(cle, conflit);
-    }
-     }
         return volconflictuel;
     }
     
