@@ -114,6 +114,7 @@ public class JAVA_PROJET {
         String adresse9 = "blabla";
         String adresse10 = "blabla";
         
+        
         Hotesse hotesse1 = new Hotesse (nom5, prenom5, adresse5);
         Hotesse hotesse2 = new Hotesse (nom6, prenom6, adresse6);
         Hotesse hotesse3 = new Hotesse (nom7, prenom7, adresse7);
@@ -141,6 +142,17 @@ public class JAVA_PROJET {
         
        // System.out.println(v.getClass().getDeclaredFields().toString());
        
-       
+      // Consulter/Modify/Delete un aéroport
+      
+     A1.consult();
+   //  A1.modify(V1, P2);
+     A1.consult();
+  //   A1.delete();
+     A1.consult();
+     
+     //Consulter/Modifier/Delete Vol l
+     v.affecteravion (Av1);
+     v.consult();
+     v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);
 }
 }

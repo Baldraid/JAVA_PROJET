@@ -9,7 +9,7 @@ package java_projet;
 import java.time.LocalTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.ArrayList;
-import java.util.Map.Entry;
+//import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -36,6 +36,7 @@ public class Vol {
         return numVol;
     }
 
+    
     public void setNumVol(int numVol) {
         this.numVol = numVol;
     }
@@ -78,7 +79,7 @@ public class Vol {
         return tarif;
     }
 
-    public void setTarif(int tarif) {
+    public void setTarif(float tarif) {
         this.tarif = tarif;
     }
 
@@ -94,17 +95,43 @@ public class Vol {
         return personnelaffecte;
     }
 
+    public Aeroport getDepart() {
+        return depart;
+    }
+
+    public void setDepart(Aeroport depart) {
+        this.depart = depart;
+    }
+
+    public Aeroport getArrive() {
+        return arrive;
+    }
+
+    public void setArrive(Aeroport arrive) {
+        this.arrive = arrive;
+    }
+
+    public Avion getAvionaffecte() {
+        return avionaffecte;
+    }
+
+    public void setAvionaffecte(Avion avionaffecte) {
+        this.avionaffecte = avionaffecte;
+    }
+
 
 
     
-    public Vol(String jourSemaine, Aeroport depart, Aeroport arrive, LocalTime heureDepart, LocalTime heureArrive, float tarif) {
+  public Vol(String jourSemaine, Aeroport depart, Aeroport arrive, LocalTime heureDepart, LocalTime heureArrive, float tarif) {
         this.numVol = count.incrementAndGet();
         this.jourSemaine = jourSemaine;
+        this.depart = depart;
+        this.arrive = arrive;
         this.heureDepart = heureDepart;
         this.heureArrive = heureArrive;
         this.etat = "en création";
         // Calcule la durée en minute du vol en soustrayant l'heure d'arrivé à l'heure de départ
-        this.duree = MINUTES.between(this.heureArrive, this.heureDepart);
+        this.duree = MINUTES.between( this.heureDepart, this.heureArrive);
         this.tarif = tarif;
        
         
@@ -118,13 +145,72 @@ public class Vol {
        personnelaffecte.add(copilote);
        personnelaffecte.add(hotesse1);
        personnelaffecte.add(hotesse2);
-       personnelaffecte.add(hotesse3);  }
+       personnelaffecte.add(hotesse3); 
+       this.setEtat("Programmé");}
         
     }
     
-   public void affecteravion (ArrayList av)
+   public void affecteravion (Avion av)
     {
         this.avionaffecte = av;
     }
+   
+   public void consult()
+   {
+        System.out.println("Informations du vol n°" +this.numVol);
+        System.out.println("Départ le " +this.jourSemaine+ "à " +this.heureDepart);
+        System.out.println("En partance de " +this.depart.getVilleA());
+        System.out.println("A destination de " +this.arrive.getVilleA()+ ". Arrive à " +this.heureArrive);
+        System.out.println("Durée : " +this.duree+ ". Tarif : " +this.tarif);
+        System.out.println("Personnel naviguant : ");
+        
+        for (int i = 0; i< this.personnelaffecte.size() ; i++){
+        System.out.println(personnelaffecte.get(i).toString());
+        }
+        System.out.println("-------------------------------");
+   }
+
+   public void modify (String jourSemaine, Aeroport depart, Aeroport arrive, LocalTime heureD, LocalTime heureA, float tarif)
+   {
+       String ancienJsemaine = this.jourSemaine;
+       Aeroport ancienADep = this.depart;
+       Aeroport ancienAArr = this.arrive;
+       LocalTime ancienHDep = this.heureDepart;
+       LocalTime ancienHArr = this.heureArrive;
+       float ancienTarif = this.tarif;
+       long ancienneDurée = this.duree; 
        
+       this.setDepart(depart);
+       this.setArrive(arrive);
+       this.setHeureDepart(heureD);
+       this.setHeureArrive(heureA);
+       this.setTarif((float) tarif);
+       this.setJourSemaine(jourSemaine);
+       this.duree = MINUTES.between( this.heureDepart, this.heureArrive);
+       System.out.println("Modifier vol n° " +this.numVol);
+       System.out.println("Ancien Jour Semaine : "+ancienJsemaine+ ". Nouveau : " +this.jourSemaine);
+       System.out.println("Ancien Aéroport de départ : " +ancienADep.getVilleA()+ ". Nouveau : " +this.depart.getVilleA());
+       System.out.println("Ancien Aéroport d'arrivé : "+ancienAArr.getVilleA()+ ". Nouveau : " +this.arrive.getVilleA());
+       System.out.println("Ancienne heure de départ : "+ancienHDep+ ". Nouveau : " +this.heureDepart);
+       System.out.println("Ancienne jeure d'arrivée : "+ancienHArr+ ". Nouveau : " +this.heureArrive);
+       System.out.println("Ancien Tarif : "+ancienTarif+ ". Nouveau : " +this.tarif);
+       System.out.println("Ancienne Durée : "+ancienneDurée+ ". Nouveau : " +this.duree);
+       System.out.println("----------------------------------------------------------------------");    
+   }
+   
+   public void delete ()
+   {
+       this.setDepart(null);
+       this.setArrive(null);
+       this.setHeureDepart(null);
+       this.setHeureArrive(null);
+       this.setTarif(0);
+       this.setJourSemaine(null);
+       this.setDuree(0);
+       this.personnelaffecte.clear();
+       this.setEtat("");
+       this.setAvionaffecte(null);
+       System.out.println("Le vol a bien été supprimé");    
+
+   }
 }

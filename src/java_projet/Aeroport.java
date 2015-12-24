@@ -18,7 +18,7 @@ public class Aeroport {
     private static final AtomicInteger count = new AtomicInteger(0); //compteur pour auto-increment
     private String villeA;
     private String paysA;
-    private ArrayList lstAero;
+    private static final ArrayList lstAero = new ArrayList();
 
     public int getCodeA() {
         return codeA;
@@ -48,9 +48,7 @@ public class Aeroport {
         return lstAero;
     }
 
-    public void setLstAero(ArrayList lstAero) {
-        this.lstAero = lstAero;
-    }
+   
 
     
     
@@ -60,5 +58,34 @@ public class Aeroport {
         this.paysA = paysA;
     }
     
-    
+    public void consult ()
+    {
+        System.out.println("Aéroport n°" +this.codeA);
+        System.out.println("Ville : " +this.villeA);
+        System.out.println("Pays : " +this.paysA);
+        System.out.println("-------------------");
+
+    }
+
+    public void modify(String ville, String pays)
+    {
+        String villeA = this.getVilleA();
+        String paysA = this.getPaysA();
+        this.setPaysA(pays);
+        this.setVilleA(ville);
+        System.out.println("L'aéroport a bien été modifié");
+        System.out.println("Anciennes valeurs :" +this.getCodeA()+ ", " +villeA+ ", " +paysA);
+        System.out.println("Nouvelles valeurs :" +this.getCodeA()+ ", " +ville+ ", " +pays);
+        System.out.println("-------------------");
+    }
+   
+    public void delete ()
+    {
+        this.setCodeA(0);
+        this.setPaysA(null);
+        this.setVilleA(null);
+        System.out.println("L'aéroport a bien été supprimé");
+        System.out.println("-------------------");
+
+    }
 }
