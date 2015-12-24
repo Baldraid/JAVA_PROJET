@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class Affecter {
    
-    private HashMap <Vol, ArrayList> affectationVol; 
+    private final HashMap <Vol, ArrayList> affectationVol; 
    
     
 
@@ -25,64 +25,99 @@ public class Affecter {
          this.affectationVol = new HashMap <> ();      
     }
 
-    //methode pour affecter un avion à un vol
-    public void affecterAvion(Vol vol, Avion a){
-        //ArrayList pour la valeur de l'HashMap
+//fonction pour affecter un avion à un vol 
+    //retourne un boolean pour déterminer si l'on affecte l'avion au vol en question
+    //attribut ArrayList avionaffecter de la classe vol
+    //si false on l'ajoute sinon non
+    public boolean affecterAvionVol(Vol vol, Avion av) {
+        //ArrayList pour la valeur de l'HashMap affectation vol de cette classe
         ArrayList affecter = new ArrayList();
-        //ArrayList qui récupère les vols en conflits
-        ArrayList <Vol> memeAvion = new ArrayList<> ();
-        //On insère les vols en conflits à cause d'un même avion grâce à la fonction memeAvion plus loin 
-        memeAvion = this.memeAvion(vol, a);
-        //s'il n'y a pas de vols en conflits alors on ajoute directement l'avion à l'ArrayList qui sera valeur de la HashMap
-        //et on ajoute à la HashMap le vol et l'arraylist de l'avion affecté
-        if (memeAvion.isEmpty())
-        {
-            affecter.add(a);
+        //HashMap qui récupère le vol et l'avion en conflit avec le vol auquel on veut affecter 
+        //Se remplie avec la fonction memeAvion
+        HashMap<Vol, ArrayList> memeAvion;
+        memeAvion = this.memeAvion(vol, av);
+        //list qui récupère les vols en conflits de plage horaire
+        //se remplie avec la fonction verifPlageHoraire
+        ArrayList<Vol> volConflictuel;
+        volConflictuel = this.verifPlageHoraire(vol, memeAvion);
+        //Booleen pour le retour de la fonction
+        boolean conflit = false;
+        //S'il n'y a pas d'avion en conflit ou pas de conflit de plage horaire alors on ajoute directement
+        if (memeAvion.isEmpty() || volConflictuel.isEmpty()) {
+            //On ajoute tous l'avion à l'ArrayList affecter
+            affecter.add(av);
+            //On ajoute à la HashMap la clé : vol et la valeur : ArrayList des avions affectés
             this.affectationVol.put(vol, affecter);
-            //on ajoute au vol l'arrayList de l'avion affecté
-            vol.affecteravion(affecter);
-            //Sinon on vérifie les plages horaires du vol qu'on veut affecter aux vols auxquels il peut être en conflits car même membre du personnel
-        }
+            // et le boolean prend la valeur faux 
+            conflit = false;
+            System.out.println("L'avion " +av.getNumAvion()+ " a été affecté au vol n°" + vol.getNumVol());
+            System.out.println("----------------------------------------------------------------------------------");
+        } 
+        //Sinon on vérifie les plages horaires du vol qu'on veut affecter
+        //aux vols auxquels il peut être en conflits car même avion
         else {
-            //pour chaque vols en conflit
-            for (int i = 0; i< memeAvion.size(); i ++)
-            {   
-            //si pas de conflit de plage horaire alors on ajoute le personnel à l'arraylist et on ajoute le vol et l'arrayList à la Hashmap
-                if (verifPlageHoraire(vol)== true) {
-                    affecter.add(a);
-                    this.affectationVol.put(vol, affecter);
-                    vol.affecteravion(affecter);
-                    System.out.println("Avion bien affecté");
+            // le boolean prend la valeur true donc on ajoutera pas l'avion à la classe vol
+            conflit = true;
+            //Pour chaque entrée de la HashMap même avion
+            for (Map.Entry< Vol, ArrayList> entry : memeAvion.entrySet()) {
+                Vol volAvion = entry.getKey();
+                ArrayList avionConflict = entry.getValue();
+                // et pour chaque entrée de la HashMap volConflictuel
+                for (int i = 0; i < volConflictuel.size(); i++) {
+                    Vol volConflict = volConflictuel.get(i);
+                    // On vérifie si le vol est le même dans les deux HashMap
+                    // Si c'est bon alors on println l'avion en conflit
+                    //avec le vol où l'on veut affecter
+                    if (volAvion.equals(volConflict)) {
+                        System.out.println("Le vol n°" + volAvion.getNumVol() + " est en conflit avec le vol n°" + vol.getNumVol());
+                        System.out.println("L'avion "+avionConflict.get(i).toString()+" est déjà affecté au vol " +volAvion.getNumVol());
+                        System.out.println("----------------------------------------------------------------------------------");
+                    }
                 }
-                else 
-                {
-                    //Sinon message d'erreur
-                    System.out.println("Vous ne pouvez pas affecter cet avion à ce vol, conflit avec un autre vol");
-                }
-           }
+            }
         }
+        // et on renvoie la valeur du booleen pour savoir si on ajoute ou non à la classe vol.
+        return conflit;
     }
-    
-    //fonction qui ajoute les vols éventuellement en conflits (s'ils ont un avion en commun)
-    private ArrayList memeAvion (Vol v, Avion a)
-    {
-        //arraylist qui reçoit les vols en conflits
-        ArrayList <Vol> volMemeAvion = new ArrayList<>();
+
+    //fonction renvoie une HashMap contenant le vol en key et une ArrayList des
+    //avions en conflit en valeur;
+    //Prend en entrée l'avion trouver les éventuels doublons
+    private HashMap memeAvion(Vol v, Avion av) {
+        //HashMap qui récupère le vol avec lequel il y a un conflit d'avion et l'avion en conflit
+        HashMap<Vol, ArrayList> volMmAvion = new HashMap<>();
+        //ArrayList pour remplir la HashMap du dessus avec l'avion en conflit
+        ArrayList avionDoublon = new ArrayList();
         //pour chaque entrée de la HashMap d'affectation
-        for(Map.Entry< Vol, ArrayList> entry : this.affectationVol.entrySet()) 
+        for (Map.Entry< Vol, ArrayList> entry : this.affectationVol.entrySet()) 
         {
             Vol cle = entry.getKey();
             ArrayList valeur = entry.getValue();
-                //si l'avion est sur un autre vol on ajoute le vol à l'arraylist
-                for (int i = 0; i<valeur.size(); i++) {
-                    if (valeur.get(i).equals(a))
+            // Pour chaque avion de chaque vol de la HashMap affectationVol 
+            //Si un avion est en conflit on l'ajoute à l'arraylist des avions en conflit
+            if (v.getJourSemaine().equals(cle.getJourSemaine())) 
+            {
+                for (int i = 0; i < valeur.size(); i++) 
+                {
+                    if (valeur.get(i).equals(av)) 
                     {
-                       volMemeAvion.add(cle);
+                        avionDoublon.add(av);
+                    }
+                    //Si on a trouvé un même avion alors l'ArrayList n'est pas vide
+                    if (!avionDoublon.isEmpty())
+                    {
+                        // donc on clone l'ArrayList avion doublon
+                        ArrayList copy = (ArrayList) avionDoublon.clone();
+                        // et on ajoute l'arraylist clonée à la HashMap 
+                        volMmAvion.put(cle, copy);
+                        // Puis on vide l'ArrayList pour le tour suivant 
+                        avionDoublon.clear();
                     }
                 }
+            }
         }
-        //et on retourne l'arraylist
-        return volMemeAvion;   
+        //et on retourne la HashMap 
+        return volMmAvion;
     }
     
     //fonction pour affecter le personnel à un vol 
@@ -254,9 +289,35 @@ public class Affecter {
         return affectationVol;
     }
 
-    public void setAffectationVol(HashMap<Vol, ArrayList> affectationVol) {
-        this.affectationVol = affectationVol;
+    
+
+ 
+    
+    public void getDureeTotaleVol (String nom, String prenom)
+    {
+         long dureeTot = 0;
+         String concat;
+       concat = nom.concat(" ").concat(prenom);
+       ArrayList <Vol> listeVol = new ArrayList();    
+        
+        for(Map.Entry< Vol, ArrayList> entry : this.getAffectationVol().entrySet()) 
+     {
+    Vol cle = entry.getKey();
+    ArrayList valeur = entry.getValue();
+            for (int i =0; i<valeur.size(); i++)
+            {
+                if (valeur.get(i).toString().contains(concat))
+                {
+                    listeVol.add(cle);
+                }
+            }      
+        }
+        
+        for (int i = 0; i < listeVol.size() ; i++)
+        {
+            dureeTot = dureeTot + listeVol.get(i).getDuree();
+        }
+     
+       System.out.println(concat+ "a volé " +dureeTot+ "  pendant la semaine");   
     }
-
-
 }

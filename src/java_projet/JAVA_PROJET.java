@@ -39,9 +39,9 @@ public class JAVA_PROJET {
         
         //Avions
         Avion Av1, Av2, Av3;
-        Av1 = new Avion (1);
-        Av2 = new Avion(2);
-        Av3 = new Avion(3);
+        Av1 = new Avion ();
+        Av2 = new Avion();
+        Av3 = new Avion();
         
         //Aéroports
         Aeroport A1, A2;
@@ -122,37 +122,39 @@ public class JAVA_PROJET {
         Hotesse hotesse5 = new Hotesse (nom9, prenom9, adresse9);
         Hotesse hotesse6 = new Hotesse (nom10, prenom10, adresse10);
 
-        //Création d'affecter
+        //Création d'affectation
+        
+             //Avion
+        v.affecteravion(Av1);
+        v2.affecteravion(Av2);
+        v3.affecteravion(Av1);
+        
             //Personnel
         v.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
         v2.affecterpersonnel (pilote3, pilote4, hotesse1, hotesse4, hotesse5);
         v3.affecterpersonnel (pilote1, pilote4, hotesse1, hotesse4, hotesse5);
 
-            //Avion
-       /* Affecter a = new Affecter ();
-        a.affecterAvion(v, Av2);
-        a.affecterAvion(v2, Av2);
-        a.affecterAvion(v3, Av2);*/
-        
-        //Affecter a = new Affecter ();
-        //a.affecterPersoVol (v, pilote1, pilote2, hotesse1, hotesse2, hotesse3);
-        //a.affecterPersoVol (v2, pilote3, pilote4, hotesse1, hotesse5, hotesse6);
-        //affecterpersonnel au VOl
-        
-        
-       // System.out.println(v.getClass().getDeclaredFields().toString());
-       
+           
+            
       // Consulter/Modify/Delete un aéroport
-      
+    /*  
      A1.consult();
-   //  A1.modify(V1, P2);
+     A1.modify(V1, P2);
      A1.consult();
-  //   A1.delete();
+     A1.delete();
      A1.consult();
      
      //Consulter/Modifier/Delete Vol l
      v.affecteravion (Av1);
      v.consult();
-     v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);
+     v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);*/
+     
+     //Durée de vol du personnel/avion
+     
+       hotesse1.getDureeVol();
+       pilote1.getDureeVol();
+       Av1.getDureeVol();
+       
+     //a.getDureeTotaleVol(prenom1, nom1);
 }
 }

@@ -32,6 +32,9 @@ public class Vol {
     private static final Affecter a = new Affecter ();
 
 
+
+
+
     public int getNumVol() {
         return numVol;
     }
@@ -129,7 +132,7 @@ public class Vol {
         this.arrive = arrive;
         this.heureDepart = heureDepart;
         this.heureArrive = heureArrive;
-        this.etat = "en création";
+        this.etat = "En création";
         // Calcule la durée en minute du vol en soustrayant l'heure d'arrivé à l'heure de départ
         this.duree = MINUTES.between( this.heureDepart, this.heureArrive);
         this.tarif = tarif;
@@ -139,20 +142,34 @@ public class Vol {
     
     public void affecterpersonnel (Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3)
     {
-      if(a.affecterPersoVol(this, pilote, copilote, hotesse1, hotesse2, hotesse3) == false){
+      if(a.affecterPersoVol(this, pilote, copilote, hotesse1, hotesse2, hotesse3) == false){  
        personnelaffecte = new ArrayList ();
        personnelaffecte.add(pilote);
        personnelaffecte.add(copilote);
        personnelaffecte.add(hotesse1);
        personnelaffecte.add(hotesse2);
        personnelaffecte.add(hotesse3); 
+       
+       copilote.ajouterVolAffecter(this);
+       pilote.ajouterVolAffecter(this);
+       hotesse1.ajouterVolAffecte(this);
+       hotesse2.ajouterVolAffecte(this);
+       hotesse3.ajouterVolAffecte(this);
+
+
        this.setEtat("Programmé");}
         
     }
     
    public void affecteravion (Avion av)
     {
-        this.avionaffecte = av;
+       if (a.affecterAvionVol(this, av) == false)
+       {
+           this.avionaffecte = av;
+           av.ajouterVolAffecter(this);
+           
+           this.setEtat("En préparation");
+       }
     }
    
    public void consult()
