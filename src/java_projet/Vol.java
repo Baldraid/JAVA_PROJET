@@ -31,7 +31,7 @@ public class Vol {
     private long duree;
     private float tarif;
     private String etat;
-    private ArrayList personnelaffecte;
+    private ArrayList <Personnel> personnelaffecte;
     private static final Affecter a = new Affecter ();
 
 
@@ -258,6 +258,52 @@ public class Vol {
         System.out.println("Le vol a bien été supprimé");
     }
        
-
+public void validateVol()
+{
+    
+        switch (this.etat) {
+            case "Programmé":
+                this.etat = "Validé";
+                System.out.println("Le vol n°" +this.numVol+" a bien été validé");
+                System.out.println("-------------------------------------------");
+                break;
+            case "En préparation":
+                System.out.println("Veuillez affecter du personnel à ce vol");
+                System.out.println("-------------------------------------------");
+                break;
+            case "En création":
+                System.out.println("Veuillez affecter du personnel et un avion à ce vol");
+                System.out.println("-------------------------------------------");
+                break;}
+}
    
+public void arriveVol(){
+  
+     switch (this.etat) {
+            case "Programmé":
+                System.out.println("Veuillez d'abord valider le vol");
+                System.out.println("-------------------------------------------");
+                break;
+            case "En préparation":
+                System.out.println("Veuillez affecter du personnel à ce vol et valider ce vol");
+                System.out.println("-------------------------------------------");
+                break;
+            case "En création":
+                System.out.println("Veuillez affecter du personnel et un avion à ce vol et le valider");
+                System.out.println("-------------------------------------------");
+                break;
+            case "Validé":
+                System.out.println("Le vol n°" +this.numVol+ " est bien arrivé");
+                for (int i = 0; i < this.personnelaffecte.size(); i++)
+                {
+                    personnelaffecte.get(i).setLocalisationP(this.arrive);
+                    System.out.println(personnelaffecte.get(i).toString()+ "est maintenant localisé à " +personnelaffecte.get(i).getLocalisationP());
+                }
+                this.avionaffecte.setLocalisation(arrive);
+                System.out.println("L'avion n°"+avionaffecte.getNumAvion()+ " est maintenant localisé à " +avionaffecte.getLocalisation());
+                System.out.println("-------------------------------------------");}
+      
+    
+
+}
    } 

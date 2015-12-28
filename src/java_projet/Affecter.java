@@ -241,6 +241,10 @@ public class Affecter {
                     conflit = false;
                 }
             }
+            if (cle.getHeureDepart().equals(v.getHeureDepart()))
+            {
+                conflit = false;
+            }
             // Si conflit est faux 
             if (!conflit) {
                 //on ajoute le vol à la liste des vols conflictuels

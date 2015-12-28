@@ -19,6 +19,10 @@ public class Personnel {
         return localisationP;
     }
 
+    public void setLocalisationP(Aeroport localisationP) {
+        this.localisationP = localisationP;
+    }
+
     public String getNomP() {
         return nomP;
     }

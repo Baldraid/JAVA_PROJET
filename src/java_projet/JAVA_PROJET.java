@@ -60,11 +60,15 @@ public class JAVA_PROJET {
         LocalTime depart3 = LocalTime.parse("06:00:00");
         LocalTime arrive3 = LocalTime.parse("13:00:00");
         
+        LocalTime depart4 = LocalTime.parse("20:00:00");
+        LocalTime arrive4 = LocalTime.parse("22:00:00");
+        
         //Vol
         Vol v = new Vol(lundi, A1, A2, depart1, arrive1, (float)50.5 );
         Vol v2 = new Vol(lundi, A1, A2, depart2, arrive2, (float)50.5 );
         Vol v3 = new Vol(lundi, A1, A2, depart3, arrive3, (float)50.5 );
-
+        Vol v4 = new Vol(lundi, A1, A2, depart1, arrive1, (float)50.5 );
+        Vol v5 = new Vol(lundi, A1, A2, depart4, arrive4, (float)50.5 );
         
         // Pilotes
         String prenom1 = "Kevin";
@@ -129,12 +133,14 @@ public class JAVA_PROJET {
              //Avion
         v.affecteravion(Av1);
         v2.affecteravion(Av2);
-      v3.affecteravion(Av3);
-        
-            //Personnel
+        v3.affecteravion(Av3);
+        v4.affecteravion(Av1);
+           //Personnel
         v.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
         v2.affecterpersonnel (pilote3, pilote4, hotesse1, hotesse4, hotesse5);
         v3.affecterpersonnel (pilote1, pilote4, hotesse1, hotesse4, hotesse5);
+        v4.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
+        v5.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
 
            
             
@@ -149,17 +155,27 @@ public class JAVA_PROJET {
      //Consulter/Modifier/Delete Vol l
      v.affecteravion (Av1);
      v.consult();*/
-     v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);
+     //v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);
      
     //v.delete();
    
      //Durée de vol du personnel/avion
      
-       hotesse1.getDureeVol();
-       pilote1.getDureeVol();
-       Av1.getDureeVol();
+       //hotesse1.getDureeVol();
+       //pilote1.getDureeVol();
+       //Av1.getDureeVol();
        
      //a.getDureeTotaleVol(prenom1, nom1);
      
+     //Validate un vol 
+        v.validateVol();
+        v2.validateVol();
+        v4.validateVol();
+        
+      //Arrive un vol 
+      
+      v.arriveVol();
+      v2.arriveVol();
+      v4.arriveVol();
 }
 }
