@@ -16,18 +16,29 @@ public class Avion {
     private int numAvion;
     private ArrayList <Vol> volAffecte = new ArrayList <>();
     private static final AtomicInteger count = new AtomicInteger(0); //compteur pour auto-increment
+    private Aeroport localisation ;
 
 
     public int getNumAvion() {
         return numAvion;
     }
 
+    public Aeroport getLocalisation() {
+        return localisation;
+    }
+
+    public void setLocalisation(Aeroport localisation) {
+        this.localisation = localisation;
+    }
+
     public void setNumAvion(int numAvion) {
         this.numAvion = numAvion;
     }
 
-    public Avion() {
+    public Avion(Aeroport a) {
+        
         this.numAvion = count.incrementAndGet();
+        this.localisation = a;
     }
 
     @Override

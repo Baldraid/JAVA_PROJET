@@ -48,6 +48,11 @@ public class Aeroport {
         return lstAero;
     }
 
+    @Override
+    public String toString() {
+        return this.getVilleA();
+    }
+
    
 
     

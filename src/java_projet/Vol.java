@@ -9,8 +9,11 @@ package java_projet;
 import java.time.LocalTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 //import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 /**
  *
@@ -189,6 +192,7 @@ public class Vol {
 
    public void modify (String jourSemaine, Aeroport depart, Aeroport arrive, LocalTime heureD, LocalTime heureA, float tarif)
    {
+       
        String ancienJsemaine = this.jourSemaine;
        Aeroport ancienADep = this.depart;
        Aeroport ancienAArr = this.arrive;
@@ -213,21 +217,47 @@ public class Vol {
        System.out.println("Ancien Tarif : "+ancienTarif+ ". Nouveau : " +this.tarif);
        System.out.println("Ancienne Durée : "+ancienneDurée+ ". Nouveau : " +this.duree);
        System.out.println("----------------------------------------------------------------------");    
+       
    }
    
-   public void delete ()
-   {
-       this.setDepart(null);
-       this.setArrive(null);
-       this.setHeureDepart(null);
-       this.setHeureArrive(null);
-       this.setTarif(0);
-       this.setJourSemaine(null);
-       this.setDuree(0);
-       this.personnelaffecte.clear();
-       this.setEtat("");
-       this.setAvionaffecte(null);
-       System.out.println("Le vol a bien été supprimé");    
+  
+     //methode pour supprimer un vol 
+    public void delete() {
+        /*for (Map.Entry< Vol, ArrayList> entry2 : this.a.getAffectationVol().entrySet()) {
+            Vol cle = entry2.getKey();
+            System.out.println(cle.getNumVol());
+        }*/
+        System.out.println("---------");
+        //on parcours à l'aide de Iterator() (pour eviter les erreurs lors de suppressions d'objets dans la boucle for)
+        for (Iterator<Map.Entry<Vol, ArrayList>> it = this.a.getAffectationVol().entrySet().iterator(); it.hasNext();) {
+            Map.Entry< Vol, ArrayList > entry = it.next();
+            //creation d'une variable destiné à récuperer la cle de la hashmap parcouru
+            Vol cle = entry.getKey();
+            //condition = si la cle trouvé est égal au vol que l'on veut supprimer
+            if (cle.equals(this)) {
+                //alors on supprime le vol
+                it.remove();
+            }
+        }
+        /*for (Map.Entry< Vol, ArrayList> entry2 : this.a.getAffectationVol().entrySet()) {
+            Vol cle = entry2.getKey();
+            System.out.println(cle.getNumVol());
+        }*/
+        this.setNumVol(0);
+        this.setDepart(null);
+        this.setArrive(null);
+        this.setHeureDepart(null);
+        this.setHeureArrive(null);
+        this.setTarif(0);
+        this.setJourSemaine(null);
+        this.setDuree(0);
+        this.personnelaffecte.clear();
+        this.setEtat("");
+        this.setAvionaffecte(null);
+        //une fois la suppression effectue
+        System.out.println("Le vol a bien été supprimé");
+    }
+       
 
-   }
-}
+   
+   } 

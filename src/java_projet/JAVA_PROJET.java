@@ -37,16 +37,18 @@ public class JAVA_PROJET {
         V2 = "Toulouse";
         V3 = "Paris";
         
-        //Avions
-        Avion Av1, Av2, Av3;
-        Av1 = new Avion ();
-        Av2 = new Avion();
-        Av3 = new Avion();
-        
+    
         //Aéroports
         Aeroport A1, A2;
         A1 = new Aeroport( V2, P1);
         A2 = new Aeroport( V3, P1);
+        
+            //Avions
+        Avion Av1, Av2, Av3;
+        Av1 = new Avion (A1);
+        Av2 = new Avion(A1);
+        Av3 = new Avion(A2);
+        
         
         //Heures de départ et d'arrivée
         LocalTime depart1 = LocalTime.parse("08:00:00");
@@ -81,10 +83,10 @@ public class JAVA_PROJET {
         String adresse4 = "blabla";
 
         
-        Pilote pilote1 = new Pilote ( nom1, prenom1, adresse1);
-        Pilote pilote2 = new Pilote ( nom2, prenom2,  adresse2);
-        Pilote pilote3 = new Pilote ( nom3, prenom3,  adresse3);
-        Pilote pilote4 = new Pilote ( nom4, prenom4,  adresse4);
+        Pilote pilote1 = new Pilote ( nom1, prenom1, adresse1, A1);
+        Pilote pilote2 = new Pilote ( nom2, prenom2,  adresse2, A1);
+        Pilote pilote3 = new Pilote ( nom3, prenom3,  adresse3, A2);
+        Pilote pilote4 = new Pilote ( nom4, prenom4,  adresse4, A2);
 
         
         
@@ -115,19 +117,19 @@ public class JAVA_PROJET {
         String adresse10 = "blabla";
         
         
-        Hotesse hotesse1 = new Hotesse (nom5, prenom5, adresse5);
-        Hotesse hotesse2 = new Hotesse (nom6, prenom6, adresse6);
-        Hotesse hotesse3 = new Hotesse (nom7, prenom7, adresse7);
-        Hotesse hotesse4 = new Hotesse (nom8, prenom8, adresse8);
-        Hotesse hotesse5 = new Hotesse (nom9, prenom9, adresse9);
-        Hotesse hotesse6 = new Hotesse (nom10, prenom10, adresse10);
+        Hotesse hotesse1 = new Hotesse (nom5, prenom5, adresse5, A1);
+        Hotesse hotesse2 = new Hotesse (nom6, prenom6, adresse6, A1);
+        Hotesse hotesse3 = new Hotesse (nom7, prenom7, adresse7, A1);
+        Hotesse hotesse4 = new Hotesse (nom8, prenom8, adresse8, A2);
+        Hotesse hotesse5 = new Hotesse (nom9, prenom9, adresse9, A2);
+        Hotesse hotesse6 = new Hotesse (nom10, prenom10, adresse10, A2);
 
         //Création d'affectation
         
              //Avion
         v.affecteravion(Av1);
         v2.affecteravion(Av2);
-        v3.affecteravion(Av1);
+      v3.affecteravion(Av3);
         
             //Personnel
         v.affecterpersonnel (pilote1, pilote2, hotesse1, hotesse2, hotesse3);
@@ -146,9 +148,11 @@ public class JAVA_PROJET {
      
      //Consulter/Modifier/Delete Vol l
      v.affecteravion (Av1);
-     v.consult();
-     v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);*/
+     v.consult();*/
+     v.modify(mardi, A2, A1, depart2, arrive2, (float)70.15);
      
+    //v.delete();
+   
      //Durée de vol du personnel/avion
      
        hotesse1.getDureeVol();
@@ -156,5 +160,6 @@ public class JAVA_PROJET {
        Av1.getDureeVol();
        
      //a.getDureeTotaleVol(prenom1, nom1);
+     
 }
 }

@@ -13,6 +13,11 @@ public class Personnel {
     private String nomP;
     private String prenomP;
     private String adresseP;
+    private Aeroport localisationP;
+
+    public Aeroport getLocalisationP() {
+        return localisationP;
+    }
 
     public String getNomP() {
         return nomP;
@@ -38,10 +43,11 @@ public class Personnel {
         this.adresseP = adresseP;
     }
 
-    public Personnel(String nomP, String prenomP, String adresseP) {
+    public Personnel(String nomP, String prenomP, String adresseP, Aeroport aeroP) {
         this.nomP = nomP;
         this.prenomP = prenomP;
         this.adresseP = adresseP;
+        this.localisationP = aeroP;
     }
 
     @Override

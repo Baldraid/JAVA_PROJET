@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Pilote extends Personnel{
     private ArrayList <Vol> volAffecte = new ArrayList <>();
     
-    public Pilote(String nomP, String prenomP, String adresseP) {
-        super(nomP, prenomP, adresseP);
+    public Pilote(String nomP, String prenomP, String adresseP, Aeroport a) {
+        super(nomP, prenomP, adresseP, a);
     }
     
     public void ajouterVolAffecter (Vol v)

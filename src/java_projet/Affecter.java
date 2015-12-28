@@ -15,6 +15,7 @@ import java.util.Map;
 public class Affecter {
    
     private final HashMap <Vol, ArrayList> affectationVol; 
+    private final HashMap <Vol, Avion> affectationVolAvion;
    
     
 
@@ -22,7 +23,8 @@ public class Affecter {
     // Constructeur qui initialise juste la HashMap
     public Affecter() {
         
-         this.affectationVol = new HashMap <> ();      
+         this.affectationVol = new HashMap <> ();  
+         this.affectationVolAvion = new HashMap <>();
     }
 
 //fonction pour affecter un avion à un vol 
@@ -30,8 +32,7 @@ public class Affecter {
     //attribut ArrayList avionaffecter de la classe vol
     //si false on l'ajoute sinon non
     public boolean affecterAvionVol(Vol vol, Avion av) {
-        //ArrayList pour la valeur de l'HashMap affectation vol de cette classe
-        ArrayList affecter = new ArrayList();
+  
         //HashMap qui récupère le vol et l'avion en conflit avec le vol auquel on veut affecter 
         //Se remplie avec la fonction memeAvion
         HashMap<Vol, ArrayList> memeAvion;
@@ -45,14 +46,21 @@ public class Affecter {
         //S'il n'y a pas d'avion en conflit ou pas de conflit de plage horaire alors on ajoute directement
         if (memeAvion.isEmpty() || volConflictuel.isEmpty()) {
             //On ajoute tous l'avion à l'ArrayList affecter
-            affecter.add(av);
+            if (av.getLocalisation().equals(vol.getDepart())){
             //On ajoute à la HashMap la clé : vol et la valeur : ArrayList des avions affectés
-            this.affectationVol.put(vol, affecter);
+            this.affectationVolAvion.put(vol, av);
             // et le boolean prend la valeur faux 
             conflit = false;
             System.out.println("L'avion " +av.getNumAvion()+ " a été affecté au vol n°" + vol.getNumVol());
             System.out.println("----------------------------------------------------------------------------------");
-        } 
+        }
+            else {
+            System.out.println("L'avion " +av.getNumAvion()+ " n'est pas dans le bon aéroport :" );
+            System.out.println("L'avion est à " +av.getLocalisation()+ " alors que le vol part de " +vol.getDepart().getVilleA());           
+            System.out.println("----------------------------------------------------------------------------------");
+            }
+        }
+        
         //Sinon on vérifie les plages horaires du vol qu'on veut affecter
         //aux vols auxquels il peut être en conflits car même avion
         else {
@@ -89,17 +97,15 @@ public class Affecter {
         //ArrayList pour remplir la HashMap du dessus avec l'avion en conflit
         ArrayList avionDoublon = new ArrayList();
         //pour chaque entrée de la HashMap d'affectation
-        for (Map.Entry< Vol, ArrayList> entry : this.affectationVol.entrySet()) 
+        for (Map.Entry< Vol, Avion> entry : this.affectationVolAvion.entrySet()) 
         {
             Vol cle = entry.getKey();
-            ArrayList valeur = entry.getValue();
+            Avion valeur = entry.getValue();
             // Pour chaque avion de chaque vol de la HashMap affectationVol 
             //Si un avion est en conflit on l'ajoute à l'arraylist des avions en conflit
             if (v.getJourSemaine().equals(cle.getJourSemaine())) 
             {
-                for (int i = 0; i < valeur.size(); i++) 
-                {
-                    if (valeur.get(i).equals(av)) 
+                 if (valeur.equals(av)) 
                     {
                         avionDoublon.add(av);
                     }
@@ -115,10 +121,11 @@ public class Affecter {
                     }
                 }
             }
-        }
-        //et on retourne la HashMap 
+         //et on retourne la HashMap 
         return volMmAvion;
-    }
+        }
+       
+
     
     //fonction pour affecter le personnel à un vol 
     //retourne un boolean pour déterminer si l'on ajoute les membres du personnel au vol en question
@@ -126,11 +133,14 @@ public class Affecter {
     // si false on l'ajoute sinon non
      public boolean affecterPersoVol(Vol vol, Pilote pilote, Pilote copilote, Hotesse hotesse1, Hotesse hotesse2, Hotesse hotesse3) {
         //ArrayList pour la valeur de l'HashMap affectation vol de cette classe
-        ArrayList affecter = new ArrayList();
+        ArrayList <Personnel> affecter = new ArrayList();
         //HashMap qui récupère le vol et le personnel en conflit avec le vol auquel on veut affecter 
         // Se remplie avec la fonction memepersonnel
         HashMap<Vol, ArrayList> memePersonnel;
         memePersonnel = this.memePersonnel(vol, pilote, copilote, hotesse1, hotesse2, hotesse3);
+        
+        ArrayList <Personnel> difLocaP;
+        difLocaP = this.differentLocaP(vol, pilote, copilote, hotesse1, hotesse2, hotesse3);
         //HashMap qui récupère les vols en conflits de plage horaire
         //J'aurais pu juste utiliser une ArrayList mais tant pis je changerais plus tard
         // se remplie avec la fonction verifPlageHoraire
@@ -139,7 +149,7 @@ public class Affecter {
         //Booleen pour le retour de la fonction
         boolean conflit = false;
         //S'il n'y a pas de personnel en conflit ou pas de conflit de plage horaire alors on ajoute directement
-        if (memePersonnel.isEmpty() || volConflictuel.isEmpty()) {
+        if (memePersonnel.isEmpty() || volConflictuel.isEmpty() && difLocaP.isEmpty()) {
             //On ajoute tous les membres du personnel à l'ArrayList affecter
             affecter.add(pilote);
             affecter.add(copilote);
@@ -154,6 +164,20 @@ public class Affecter {
             System.out.println("----------------------------------------------------------------------------------");
         } //Sinon on vérifie les plages horaires du vol qu'on veut affecter
         //aux vols auxquels il peut être en conflits car même membre du personnel
+        else if (!difLocaP.isEmpty())
+        {
+            conflit = true;
+       System.out.println("Le membres du personnel suivants ne sont pas dans le bon aéroport");
+
+            for (int i=0; i<difLocaP.size(); i++)
+            {
+              System.out.println("Le membre " +difLocaP.get(i).toString()+ " est à " +difLocaP.get(i).getLocalisationP());
+             
+             }
+       System.out.println("Alors que le vol décolle de " +vol.getDepart());
+       System.out.println("-------------------------------------");
+
+        }
         else {
             // le booleen prend la valeur true donc on ajoutera pas les membre du personnel à la classe vol
             conflit = true;
@@ -240,7 +264,7 @@ public class Affecter {
         for(Map.Entry< Vol, ArrayList> entry : this.affectationVol.entrySet()) 
      {
     Vol cle = entry.getKey();
-    ArrayList valeur = entry.getValue();
+    ArrayList  valeur = entry.getValue();
         // Pour chaque membre du personnel de chaque vol de la HashMap affectationVol 
          //Si un membre du personnel est en conflit on l'ajoute à l'arraylist du personnel en conflit
       if (v.getJourSemaine().equals(cle.getJourSemaine())){
@@ -248,19 +272,19 @@ public class Affecter {
             if (valeur.get(i).equals(p1)) {
                 personnelDoublon.add(p1);
             }
-            else if (valeur.get(i).equals(p2))
+            if (valeur.get(i).equals(p2))
             {
                 personnelDoublon.add(p2);
             }
-            else if (valeur.get(i).equals(h1))
+            if (valeur.get(i).equals(h1))
             {
                 personnelDoublon.add(h1);
             }
-            else if (valeur.get(i).equals(h2))
+            if (valeur.get(i).equals(h2))
             {
                 personnelDoublon.add(h2);
             }
-            else if (valeur.get(i).equals(h3))
+            if (valeur.get(i).equals(h3))
             {
                 personnelDoublon.add(h3);
             }
@@ -282,42 +306,46 @@ public class Affecter {
         //et on retourne la HashMap 
      return volMmPersonnel;   
     }
-    
+     private ArrayList differentLocaP (Vol v, Pilote p1, Pilote p2, Hotesse h1, Hotesse h2, Hotesse h3)
+    {
+      ArrayList persDifLocaP = new ArrayList ();
+        
+            if (v.getDepart() != p1.getLocalisationP()) {
+                persDifLocaP.add(p1);
+            }
+            if (v.getDepart() != p2.getLocalisationP())
+            {
+                persDifLocaP.add(p2);
+            }
+             if (v.getDepart() != h1.getLocalisationP())
+            {
+                persDifLocaP.add(h1);
+            }
+             if (v.getDepart() != h2.getLocalisationP())
+            {
+                persDifLocaP.add(h2);
+            }
+             if (v.getDepart() != h3.getLocalisationP())
+            {
+                persDifLocaP.add(h3);
+            }
+            return persDifLocaP;
+            
+        }
+     
     
     
     public HashMap<Vol, ArrayList> getAffectationVol() {
         return affectationVol;
     }
 
+    public HashMap<Vol, Avion> getAffectationVolAvion() {
+        return affectationVolAvion;
+    }
+
     
 
  
     
-    public void getDureeTotaleVol (String nom, String prenom)
-    {
-         long dureeTot = 0;
-         String concat;
-       concat = nom.concat(" ").concat(prenom);
-       ArrayList <Vol> listeVol = new ArrayList();    
-        
-        for(Map.Entry< Vol, ArrayList> entry : this.getAffectationVol().entrySet()) 
-     {
-    Vol cle = entry.getKey();
-    ArrayList valeur = entry.getValue();
-            for (int i =0; i<valeur.size(); i++)
-            {
-                if (valeur.get(i).toString().contains(concat))
-                {
-                    listeVol.add(cle);
-                }
-            }      
-        }
-        
-        for (int i = 0; i < listeVol.size() ; i++)
-        {
-            dureeTot = dureeTot + listeVol.get(i).getDuree();
-        }
-     
-       System.out.println(concat+ "a volé " +dureeTot+ "  pendant la semaine");   
-    }
+  
 }

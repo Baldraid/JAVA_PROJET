@@ -15,10 +15,11 @@ import java.util.ArrayList;
 public class Hotesse extends Personnel{
     private ArrayList<Vol> volAffecte = new ArrayList ();        
 
-    public Hotesse(String nomP, String prenomP, String adresseP) {
-        super(nomP, prenomP, adresseP);
+    public Hotesse(String nomP, String prenomP, String adresseP, Aeroport a) {
+        super(nomP, prenomP, adresseP, a);
     }
 
+   
     @Override
     public String toString() {
         return "L'hotesse " +super.toString();
