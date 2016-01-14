@@ -18,7 +18,7 @@ public class Aeroport {
     private static final AtomicInteger count = new AtomicInteger(0); //compteur pour auto-increment
     private String villeA;
     private String paysA;
-    private static final ArrayList lstAero = new ArrayList();
+    private ArrayList<Vol> lstVolAffecte = new ArrayList ();
 
     public int getCodeA() {
         return codeA;
@@ -44,9 +44,7 @@ public class Aeroport {
         this.paysA = paysA;
     }
 
-    public ArrayList getLstAero() {
-        return lstAero;
-    }
+
 
     @Override
     public String toString() {
@@ -71,6 +69,10 @@ public class Aeroport {
         System.out.println("-------------------");
 
     }
+    public void ajouterVol (Vol v )
+    {
+        lstVolAffecte.add(v);
+    }
 
     public void modify(String ville, String pays)
     {
@@ -84,13 +86,31 @@ public class Aeroport {
         System.out.println("-------------------");
     }
    
-    public void delete ()
-    {
-        this.setCodeA(0);
-        this.setPaysA(null);
-        this.setVilleA(null);
-        System.out.println("L'aéroport a bien été supprimé");
-        System.out.println("-------------------");
-
+   public ArrayList getLstvol() {
+        return lstVolAffecte;
     }
-}
+
+    public void setLstvol(ArrayList lstvol) {
+        this.lstVolAffecte = lstvol;
+    }
+
+public void delete ()
+    {
+       
+       //on parcours à l'aide de Iterator() (pour eviter les erreurs lors de suppressions d'objets dans la boucle for)
+    if (this.lstVolAffecte.isEmpty()) {
+                this.setCodeA(0);
+                this.setPaysA(null);
+                this.setVilleA(null);
+                System.out.println("L'aéroport a bien été supprimé");
+                System.out.println("-------------------");
+    }
+    else{
+        System.out.println("Vous ne pouvez pas supprimer cet aéroport :");
+        for (int i = 0; i < lstVolAffecte.size(); i++) {          
+                System.out.println("Il est associé au vol : "+lstVolAffecte.get(i).getNumVol());
+                
+            }
+        }
+                System.out.println("-----------------------------------------");
+    }}

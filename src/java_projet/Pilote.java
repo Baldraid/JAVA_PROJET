@@ -11,40 +11,35 @@ import java.util.ArrayList;
  *
  * @author Mathilde Bedel
  */
-public class Pilote extends Personnel{
-    private ArrayList <Vol> volAffecte = new ArrayList <>();
-    
+public class Pilote extends Personnel {
+
+    private ArrayList<Vol> volAffecte = new ArrayList<>();
+
     public Pilote(String nomP, String prenomP, String adresseP, Aeroport a) {
         super(nomP, prenomP, adresseP, a);
     }
-    
-    public void ajouterVolAffecter (Vol v)
-    {
+
+    public void ajouterVolAffecter(Vol v) {
         volAffecte.add(v);
     }
 
     @Override
     public String toString() {
-        return "Le pilote " +super.toString();
+        return "Le pilote " + super.toString();
     }
-    
-     public void getDureeVol ()
-    {
-         long dureeTot = 0;
-      
-        
-      
-            for (int i =0; i<this.volAffecte.size(); i++)
-            {
-                
-                dureeTot = dureeTot + volAffecte.get(i).getDuree();                
-            }      
 
-           System.out.println( this.getPrenomP()+ " " +this.getNomP()+ " a volé " +dureeTot+ " minutes pendant la semaine");   
-           System.out.println("soit " +dureeTot/60+ " heures");
-           System.out.println("----------------------------------");   
+    public void getDureeVol() {
+        long dureeTot = 0;
 
+        for (int i = 0; i < this.volAffecte.size(); i++) {
 
+            dureeTot = dureeTot + volAffecte.get(i).getDuree();
         }
-    
+
+        System.out.println(this.getPrenomP() + " " + this.getNomP() + " a volé " + dureeTot + " minutes pendant la semaine");
+        System.out.println("soit " + dureeTot / 60 + " heures");
+        System.out.println("----------------------------------");
+
+    }
+
 }
